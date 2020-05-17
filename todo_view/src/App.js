@@ -9,7 +9,6 @@ import './App.css';
 class App  extends React.Component {
   render() {
     return (
-      
       <div class="_2BSER search-header__form-wrapper">
         <div align='center' >
           <h1 > TODO Application </h1>
@@ -20,8 +19,50 @@ class App  extends React.Component {
             <CButton > Add TODO </CButton>
           </div>
         </CForm>
+        <br/>
+
+        <TODO_LIST_COMP/>
+
      </div>      
     );
+  }
+}
+
+class TODO_LIST_COMP extends React.Component{
+  
+  constructor(){
+    super();
+    this.state = {
+        list_todos: []
+    }
+  } 
+
+  componentDidMount() {
+    let url = 'http://localhost:81/todoapp/api/todos';
+
+    fetch(url , {
+      method: 'GET',
+      headers: {
+        'x-gateway-apikey': 'ConfiguredValue',
+        'csrf-token': 'CrossSiteRequestForgery_Token'
+      }
+    })
+    .then(response => response.json())
+    .then((data)=>{
+      this.setState({list_todos: data.todos})
+    })
+  }
+  
+  render() {
+      return (
+        <div>
+          <ul>
+                {this.list_todos.map(s => (<li>{s.ID}</li>))}
+            </ul>
+
+         
+        </div>
+      );
   }
 }
 

@@ -1,69 +1,36 @@
 import React from 'react';
-import CButton from 'carbon-components-react/lib/components/Button';
+
+import CButton from 'carbon-components-react/lib/components/Button/';
 import CTextInput from 'carbon-components-react/lib/components/TextInput';
 import CForm from 'carbon-components-react/lib/components/Form';
+import COrderedList from 'carbon-components-react/lib/components/OrderedList';
+import CListItem from 'carbon-components-react/lib/components/ListItem';
 
-import logo from './logo.svg';
+import '../node_modules/carbon-components/css/carbon-components.css'
 import './App.css';
+
 
 class App  extends React.Component {
   render() {
     return (
-      <div class="_2BSER search-header__form-wrapper">
-        <div align='center' >
-          <h1 > TODO Application </h1>
-        </div>
-        <CForm method="post" action="http://localhost:81/todoapp/api/todo">
-          <div align='center' >
-            <CTextInput  id="todoID" maxLength="40" placeholder="TODO Description"/>
-            <CButton > Add TODO </CButton>
-          </div>
-        </CForm>
-        <br/>
+   <CForm class="App" action="http://localhost:81/todoapp/api/todo" method="post"  id="todo_form">
+      <br/>
+      <legend class="h4"> TODO APPLICATION </legend>
+      <br/>
+      <div class="form-group">
+         <div >
+            <div>
+               <CTextInput  maxLength="30" name="description" placeholder="Todo Description" type="text"/>
+               <CButton  class="bx--btn" type="submit" >Add TODO</CButton>
+            </div>
+         </div>
+      </div> 
 
-        <TODO_LIST_COMP/>
-
-     </div>      
+      <br/><br/><br/><br/>
+      <CListItem style= {{ textDecoration: 'line-through'} }> Test Completed</CListItem>
+   </CForm>
+  
     );
   }
 }
-
-class TODO_LIST_COMP extends React.Component{
-  
-  constructor(){
-    super();
-    this.state = {
-        list_todos: []
-    }
-  } 
-
-  componentDidMount() {
-    let url = 'http://localhost:81/todoapp/api/todos';
-
-    fetch(url , {
-      method: 'GET',
-      headers: {
-        'x-gateway-apikey': 'ConfiguredValue',
-        'csrf-token': 'CrossSiteRequestForgery_Token'
-      }
-    })
-    .then(response => response.json())
-    .then((data)=>{
-      this.setState({list_todos: data.todos})
-    })
-  }
-  
-  render() {
-      return (
-        <div>
-          <ul>
-                {this.list_todos.map(s => (<li>{s.ID}</li>))}
-            </ul>
-
-         
-        </div>
-      );
-  }
-}
-
 export default App;

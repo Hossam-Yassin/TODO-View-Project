@@ -14,6 +14,13 @@
   dependencies:
     "@carbon/icon-helpers" "^10.7.0"
 
+"@carbon/icons-react@^10.11.0":
+  version "10.11.0"
+  resolved "https://registry.yarnpkg.com/@carbon/icons-react/-/icons-react-10.11.0.tgz#f25d0dcbe204aaa40ec973bdd10dda30f0b0ca7f"
+  integrity sha512-v1jZaQriW203wSlq7QdcILIuaVSsmo74asfe0MSa9nod4FqEb+sD6GHe85fgOoFnqvHKrJ+U1CSH/xd1GVC9xw==
+  dependencies:
+    "@carbon/icon-helpers" "^10.7.0"
+
 carbon-components-react@^7.11.3:
   version "7.11.3"
   resolved "https://registry.yarnpkg.com/carbon-components-react/-/carbon-components-react-7.11.3.tgz#3e81752fdf9921115f5849a6eaf763187bbe4d3d"

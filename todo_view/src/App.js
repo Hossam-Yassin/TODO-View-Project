@@ -15,7 +15,7 @@ class App  extends React.Component {
     return (
    <CForm class="App" action="http://localhost:81/todoapp/api/todo/" method="post"  id="todo_form">
       <br/>
-      <legend class="h4"> TODO APPLICATION </legend>
+      <legend class="h1"> TODO APPLICATION </legend>
       <br/>
       <div class="form-group">
          <div >
@@ -49,6 +49,16 @@ class TODO_LIST_COMP extends React.Component{
               'x-gateway-apikey': 'ConfiguredValue',
               'csrf-token': 'CrossSiteRequestForgery_Token'
             }
+          })
+          .then(()=>{
+            this.state.list_todos.map(
+              (todo, index) =>  {
+                  if(todo.id === id){
+                    this.state.list_todos.splice(index,1);
+                  }
+               }
+              )
+            this.setState({list_todos: this.state.list_todos})
           });
   };
 
@@ -64,6 +74,15 @@ class TODO_LIST_COMP extends React.Component{
             body: JSON.stringify({
               status:'Completed'
             })
+          }).then(()=>{
+            this.state.list_todos.map(
+              (todo, index) =>  {
+                  if(todo.id === id){
+                    todo.status='Completed';
+                  }
+               }
+              )
+            this.setState({list_todos: this.state.list_todos})
           });
   };
 

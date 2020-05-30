@@ -6,7 +6,7 @@ import ViewList from './ViewList'
 function MainPage() {
   return (
     <div class="row App" >
-        
+        <AddForm/>
         <br/><br/><br/><br/>
         <ViewList/>
       </div>

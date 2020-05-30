@@ -1,13 +1,13 @@
 import React from 'react';
 
 import { connect } from 'react-redux';
+import { completeTodo, deleteTodo, publish } from '../actions/actions';
 
 import { ThumbsUp16, TrashCan16 } from '@carbon/icons-react';
 
 import COrderedList from 'carbon-components-react/lib/components/OrderedList';
 import CListItem from 'carbon-components-react/lib/components/ListItem';
 
-import {completeTodo , deleteTodo  , publish} from '../actions/actions';
 
 class ViewList extends React.Component {
 
@@ -53,12 +53,16 @@ class ViewList extends React.Component {
     })
       .then(response => response.json())
       .then((data) => {
-        alert('loaded : ' + data.todos)
         this.props.publish(data.todos);
       })
   }
 
   render() {
+
+    this.deleteTODO = this.deleteTODO.bind(this);
+    this.completeTODO = this.completeTODO.bind(this);
+
+
     return (
       <COrderedList>
         {
@@ -67,10 +71,9 @@ class ViewList extends React.Component {
               <CListItem  >
                 <div style={{ textDecoration: todo.status == 'Completed' ? "line-through" : "" }} class="column">{todo.description}</div>
                 <div class="column">
-                  {/* <ThumbsUp16 onClick={() => this.completeTODO(todo.id)} /> &emsp;
-                  <TrashCan16 onClick={() => this.deleteTODO(todo.id)} /> */}
+                  <ThumbsUp16 onClick={() => this.completeTODO(todo.id)} /> &emsp;
+                  <TrashCan16 onClick={() => this.deleteTODO(todo.id)} />
                 </div>
-                <br />
               </CListItem>
           )
         }
@@ -80,22 +83,16 @@ class ViewList extends React.Component {
 }
 
 function mapStateToProps(state) {
-  alert('mapStateToProps :  ' + state.todos)
-  
-  if(state.todos===undefined)
-     return {
-        todos: []
-     };
   return {
-      todos: state.todos
-   }; 
+    todos: state.todos
+  };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-      deleteTodo: (id) => dispatch(deleteTodo(id)),
-      completeTodo: (id) => dispatch(completeTodo(id)),
-      publish: (todos) => dispatch(publish(todos)),
+    deleteTodo: (id) => dispatch(deleteTodo(id)),
+    completeTodo: (id) => dispatch(completeTodo(id)),
+    publish: (todos) => dispatch(publish(todos)),
   };
 }
-export default connect(mapStateToProps,mapDispatchToProps)(ViewList);
+export default connect(mapStateToProps, mapDispatchToProps)(ViewList);

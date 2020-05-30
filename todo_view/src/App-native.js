@@ -29,7 +29,7 @@ class App extends React.Component {
 
 class TODO_FORM extends React.Component {
 
-  addTODO() {
+  addTODO(event) {
     var text = document.getElementById('todo_desr').value;
     fetch("http://localhost:81/todoapp/api/todo/", {
       method: "POST",
@@ -40,6 +40,8 @@ class TODO_FORM extends React.Component {
         "Content-Type": "application/json"
       }
     })
+
+    event.preventDefault();
   }
 
   render() {

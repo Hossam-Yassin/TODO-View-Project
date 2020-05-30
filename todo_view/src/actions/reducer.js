@@ -3,40 +3,49 @@ let initialState = {
 }
 
 function TODOReducer(state = initialState, action) {
+  var fetchedTODOS = action.list;
   switch (action.type) {
 
     case "ADD_TODO":
-      var todo = { description: action.text, status: 'New' };
+      var todo = action.todo;
       var newState = Object.assign({}, state, {
         todos: [...state.todos, todo]
       });
       return newState;
 
     case "COMPLETE_TODO":
-      var todos = Object.assign({}, state.todos);
-      todos.map(
+      var new_state = Object.assign({}, state, {
+        todos: [...state.todos]
+      });
+
+      new_state.todos.map(
         (todo, index) => {
           if (todo.id === action.id) {
             todo.status = 'Completed';
           }
         }
       )
-      var newState = Object.assign({}, todos);
-      return newState;
+      return new_state;
 
     case "DELETE_TODO":
-      var todos = Object.assign({}, state.todos);
-      todos.map(
+      var new_state = Object.assign({}, state, {
+        todos: [...state.todos]
+      });
+
+      new_state.todos.map(
         (todo, index) => {
           if (todo.id === action.id) {
-            todos.splice(index, 1);
+            new_state.todos.splice(index, 1);
           }
         }
       )
-      return Object.assign({}, todos);
+      return new_state;
 
     case "PUBLISH_TODOS":
-      return Object.assign({}, action.list);
+      var newState = Object.assign({}, {
+        todos: [...action.list]
+      });
+      return newState;
 
     default:
       return state;

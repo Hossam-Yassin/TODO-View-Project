@@ -69,10 +69,11 @@ class ViewList extends React.Component {
           this.props.todos.map(
             (todo, index) =>
               <CListItem  >
-                <div style={{ textDecoration: todo.status == 'Completed' ? "line-through" : "" }} class="column">{todo.description}</div>
-                <div class="column">
+                <div class="column App"  style={{ textDecoration: todo.status == 'Completed' ? "line-through" : "" }} class="column">{todo.description}</div>
+                <div  >
                   <ThumbsUp16 onClick={() => this.completeTODO(todo.id)} /> &emsp;
-                  <TrashCan16 onClick={() => this.deleteTODO(todo.id)} />
+                  <TrashCan16 onClick={() => this.deleteTODO(todo.id)} /> 
+                  <br/><br/>
                 </div>
               </CListItem>
           )

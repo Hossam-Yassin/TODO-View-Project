@@ -30,7 +30,6 @@ class AddForm extends React.Component {
 
     
     var todo = {id : id , description : text , status : 'New'};
-    alert(todo);
     
     this.props.addToDo(todo);
     return false;

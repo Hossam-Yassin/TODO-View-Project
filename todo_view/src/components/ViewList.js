@@ -19,10 +19,15 @@ class ViewList extends React.Component {
         'x-gateway-apikey': 'ConfiguredValue',
         'csrf-token': 'CrossSiteRequestForgery_Token'
       }
-    })
-      .then(() => {
+    }).then((resp) => {
+      if (resp.status === 204) { //Success Flow
         this.props.deleteTodo(id);
-      });
+      } else { //Failure Flow
+        console.log('http://localhost:81/todoapp/api/todo/ Complete TODO Failed : ' + resp.status);
+      }
+    }).catch( (err) => {
+      console.log(err);
+    })
   };
 
   completeTODO(id) {
@@ -37,9 +42,15 @@ class ViewList extends React.Component {
       body: JSON.stringify({
         status: 'Completed'
       })
-    }).then(() => {
-      this.props.completeTodo(id);
-    });
+    }).then((resp) => {
+      if (resp.status === 200) { //Success Flow
+        this.props.completeTodo(id);
+      } else { //Failure Flow
+        console.log('http://localhost:81/todoapp/api/todo/ Complete TODO Failed : ' + resp.status);
+      }
+    }).catch( (err) => {
+      console.log(err);
+    })
   };
 
   componentDidMount() {
@@ -54,6 +65,8 @@ class ViewList extends React.Component {
       .then(response => response.json())
       .then((data) => {
         this.props.publish(data.todos);
+      }).catch( (err) => {
+        console.log(err);
       })
   }
 
@@ -69,11 +82,11 @@ class ViewList extends React.Component {
           this.props.todos.map(
             (todo, index) =>
               <CListItem  >
-                <div class="column App"  style={{ textDecoration: todo.status == 'Completed' ? "line-through" : "" }} class="column">{todo.description}</div>
+                <div class="column App" style={{ textDecoration: todo.status == 'Completed' ? "line-through" : "" }} class="column">{todo.description}</div>
                 <div  >
                   <ThumbsUp16 onClick={() => this.completeTODO(todo.id)} /> &emsp;
-                  <TrashCan16 onClick={() => this.deleteTODO(todo.id)} /> 
-                  <br/><br/>
+                  <TrashCan16 onClick={() => this.deleteTODO(todo.id)} />
+                  <br /><br />
                 </div>
               </CListItem>
           )

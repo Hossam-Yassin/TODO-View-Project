@@ -8,7 +8,6 @@ import CForm from 'carbon-components-react/lib/components/Form';
 
 import { addTodo } from '../actions/actions';
 
-
 class AddForm extends React.Component {
 
   addTODO(e) {
@@ -22,16 +21,22 @@ class AddForm extends React.Component {
         description: text
       }),
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        'x-gateway-apikey': 'ConfiguredValue',
+        'csrf-token': 'CrossSiteRequestForgery_Token'
       }
-    }).then(function(resp) {
-      id = resp.headers.get('id');
+    }).then((resp) => {
+      if(resp.status===201){ //Success Flow
+        id = resp.headers.get('id');
+        var todo = {id : id , description : text , status : 'New'};
+        this.props.addToDo(todo);
+      }else{ //Failure Flow
+        console.log('http://localhost:81/todoapp/api/todo/ Failed with response code : '  + resp.status);
+      }
+    }).catch( (err) => {
+      console.log(err);
     })
 
-    
-    var todo = {id : id , description : text , status : 'New'};
-    
-    this.props.addToDo(todo);
     return false;
   }
 
@@ -52,6 +57,7 @@ class AddForm extends React.Component {
     );
   }
 }
+
 
 function mapDispatchToProps(dispatch) {
   return {
